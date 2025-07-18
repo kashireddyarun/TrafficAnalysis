@@ -1,0 +1,82 @@
+# Configuration for Traffic Analysis System
+
+# Model Configuration
+model:
+  name: "yolov8n" # yolov8n, yolov8s, yolov8m, yolov8l, yolov8x
+  confidence_threshold: 0.5
+  iou_threshold: 0.5
+  device: "auto" # auto, cpu, cuda, mps
+
+# Detection Classes
+classes:
+  vehicles: [2, 3, 5, 7] # car, motorcycle, bus, truck
+  pedestrians: [0] # person
+  traffic_lights: [9] # traffic light
+  road_signs: [11, 12] # stop sign, etc.
+
+# Tracking Configuration
+tracking:
+  max_age: 30
+  min_hits: 3
+  iou_threshold: 0.3
+  enable_kalman_filter: true
+
+# Traffic Analysis
+traffic_analysis:
+  # Speed estimation
+  speed_estimation:
+    enabled: true
+    fps: 30
+    pixel_to_meter_ratio: 10 # pixels per meter
+
+  # Flow analysis
+  flow_analysis:
+    count_lines:
+      - [[100, 300], [500, 300]] # horizontal counting line
+      - [[300, 100], [300, 500]] # vertical counting line
+    direction_analysis: true
+
+  # Congestion detection
+  congestion:
+    density_threshold: 0.7
+    speed_threshold: 5 # km/h
+    time_window: 30 # seconds
+
+# Traffic Management
+traffic_management:
+  signal_optimization:
+    enabled: true
+    min_green_time: 10 # seconds
+    max_green_time: 60 # seconds
+    yellow_time: 3 # seconds
+    all_red_time: 2 # seconds
+
+  emergency_detection:
+    enabled: true
+    emergency_vehicles: ["ambulance", "fire_truck", "police"]
+
+# Output Configuration
+output:
+  save_video: true
+  save_analytics: true
+  real_time_display: true
+  export_format: "mp4"
+  fps: 30
+  resolution: [1280, 720]
+
+# Visualization
+visualization:
+  show_bboxes: true
+  show_tracks: true
+  show_speed: true
+  show_count: true
+  show_flow_lines: true
+  bbox_color: [0, 255, 0]
+  track_color: [255, 0, 0]
+  text_color: [255, 255, 255]
+
+# Logging
+logging:
+  level: "INFO"
+  save_logs: true
+  log_file: "logs/traffic_analysis.log"
